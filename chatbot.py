@@ -1,6 +1,7 @@
 import spacy
+# Se importa la biblioteca SpaCy para el procesamiento de lenguaje natural.
 
-# Cargar el modelo en español
+# Cargar el modelo en español.
 nlp = spacy.load("es_core_news_md")
 
 
@@ -11,11 +12,13 @@ def start_chatbot():
 
 # Se crea función para que el usuario haga preguntas.
 def question_input():
+    # Recibimos las preguntas del usuario y se convierte a minúsculas.
     question = input("¿Tienes una pregunta?: ").lower()
     return question
 
 
-# Se crea la función donde se almacenan las posibles preguntas del usuario y sus respectivas respuestas.
+# Se crea la función donde se almacenan las posibles preguntas del usuario y sus respectivas respuestas en un
+# diccionario.
 def generate_response(questions):
     doc = nlp(questions)
     predefined_questions = {
@@ -127,7 +130,9 @@ def generate_response(questions):
 
     # Busca similitudes entre la pregunta del usuario y las preguntas predefinidas
     for key, value in predefined_questions.items():
-        if doc.similarity(nlp(key.lower())) > 0.90:  # Ajusta este umbral o porcentaje de similitud según se necesite.
+        # Las preguntas predefinidas se pasan a minúsculas y se ajusta el umbral o porcentaje de similitud
+        # según se necesite.
+        if doc.similarity(nlp(key.lower())) > 0.70:
             return value
     # Si no se encuentra una coincidencia, proporciona una respuesta predeterminada
     return 'Lo siento, no se como responder a eso.'
