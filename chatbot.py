@@ -6,12 +6,12 @@ nlp = spacy.load("es_core_news_md")
 
 # Se crea la función que iniciara el chatbot
 def start_chatbot():
-    print("Hola, ¿como puedo ayudarte?")
+    print("Hola, soy CriptoChat")
 
 
 # Se crea función para que el usuario haga preguntas.
 def question_input():
-    question = input("¿Tienes una pregunta?: ")
+    question = input("¿Tienes una pregunta?: ").lower()
     return question
 
 
@@ -127,9 +127,8 @@ def generate_response(questions):
 
     # Busca similitudes entre la pregunta del usuario y las preguntas predefinidas
     for key, value in predefined_questions.items():
-        if doc.similarity(nlp(key)) > 0.75:  # Ajusta este umbral o porcentaje de similitud según se necesite.
+        if doc.similarity(nlp(key.lower())) > 0.70:  # Ajusta este umbral o porcentaje de similitud según se necesite.
             return value
-
     # Si no se encuentra una coincidencia, proporciona una respuesta predeterminada
     return 'Lo siento, no se como responder a eso.'
 
@@ -140,5 +139,6 @@ while True:
     question = question_input()  # Se le pide al usuario una pregunta.
     answer = generate_response(question)  # Se genera la respuesta a la pregunta, si se conoce.
     print(answer)
-    if question == 'Adios' or 'adios' or 'ADIOS' or 'chao':  # Si el usuario escribe la palabra 'Adios' se detiene el bucle y se cierra el chat.
+    # Si el usuario escribe la palabra 'Adios' se detiene el bucle y se cierra el chat.
+    if question.lower() == 'adios':
         break
